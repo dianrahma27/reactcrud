@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ls from 'local-storage';
 
 export default class Create extends Component {
 
@@ -52,24 +51,8 @@ export default class Create extends Component {
     // React Life Cycle
     componentDidMount() {
         this.userData = JSON.parse(localStorage.getItem('user'));
-
-        if (localStorage.getItem('user')) {
-            this.setState({
-                nim: this.userData.nim,
-                nama: this.userData.nama,
-                email: this.userData.email,
-                prodi: this.userData.prodi,
-                alamat: this.userData.alamat
-            })
-        } else {
-            this.setState({
-                nim: '',
-                nama: '',
-                email: '',
-                prodi: '',
-                alamat: ''
-            })
-        }
+        
+        
     }
 
     componentWillUpdate(nextProps, nextState) {
