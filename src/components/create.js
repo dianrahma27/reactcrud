@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ls from 'local-storage';
 
 export default class Create extends Component {
 
@@ -24,45 +25,28 @@ export default class Create extends Component {
 
     // Form Events
     onChangeNim(e){
-        this.setState({
-            nim: e.target.value
-        });
+        this.setState({nim: e.target.value})
     }
 
     onChangeNama(e){
-        this.setState({
-            nama: e.target.value
-        });
+        this.setState({nama: e.target.value})
     }
 
     onChangeEmail(e){
-        this.setState({
-            email: e.target.value
-        });
+        this.setState({email: e.target.value})
     }
 
     onChangeProdi(e){
-        this.setState({
-            prodi: e.target.value
-        });
+        this.setState({prodi: e.target.value})
     }
 
     onChangeAlamat(e){
-        this.setState({
-            alamat: e.target.value
-        });
+        this.setState({alamat: e.target.value})
     }
 
     onSubmit(e) {
-        e.preventDefault();
-        //localStorage.setItem('user',JSON.stringify(this.state));
-        this.setState = {
-            nim: '',
-            nama: '',
-            email:'',
-            prodi: '',
-            alamat: ''
-        }
+        e.preventDefault()
+        
     }
 
     // React Life Cycle
@@ -109,7 +93,7 @@ export default class Create extends Component {
                 </div>
                 <div className="form-group">
                     <label>Email: </label>
-                    <input type="email"  className="form-control" placeholder="Masukkan email"
+                    <input type="email" className="form-control" placeholder="Masukkan email"
                     value={this.state.email} onChange={this.onChangeEmail}/>
                 </div>
                 <div className="form-group">
