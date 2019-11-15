@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 
 export default class Create extends Component {
 
-    userData;
-
+    data;
     constructor(props) {
         super(props);
-        this.onChangeNim = this.onChangeNim.bind(this);
-        this.onChangeNama = this.onChangeNama.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeProdi = this.onChangeProdi.bind(this);
-        this.onChangeAlamat = this.onChangeAlamat.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
+        this.handleChange = this.handleChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.state = {
             nim: '',
             nama: '',
@@ -22,66 +16,62 @@ export default class Create extends Component {
         }
     }
 
-    // Form Events
-    onChangeNim(e){
-        this.setState({nim: e.target.value})
+    handleChange= (e)=> {
+        this.setState({[e.target.name]:e.target.value});
     }
-
-    onChangeNama(e){
-        this.setState({nama: e.target.value})
-    }
-
-    onChangeEmail(e){
-        this.setState({email: e.target.value})
-    }
-
-    onChangeProdi(e){
-        this.setState({prodi: e.target.value})
-    }
-
-    onChangeAlamat(e){
-        this.setState({alamat: e.target.value})
-    }
-
-    onSubmit(e) {
+    // on form submit...
+    handleFormSubmit(e) {
         e.preventDefault()
-        
+        localStorage.setItem('document',JSON.stringify(this.state)
+        ,alert('berhasil menyimpan'));
     }
-
+    
     // React Life Cycle
     componentDidMount() {
-        this.userData = JSON.parse(localStorage.getItem('user'));
-        
-        
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem('user', JSON.stringify(nextState));
+        this.data = JSON.parse(localStorage.getItem('document'));
+    
+        if (localStorage.getItem('document')) {
+            this.setState({
+                nim: this.data.nim,
+                nama: this.data.nama,
+                email: this.data.email,
+                prodi: this.data.prodi,
+                alamat: this.data.alamat
+        })
+        } else {
+            this.setState({
+                nim: '',
+                nama: '',
+                email:'',
+                prodi: '',
+                alamat: ''
+            })
+        }
     }
 
     render() {
         return(
-            <form onSubmit={this.onSubmit} style={{ padding: 5, width: 1130 }}>
+            <form onSubmit={this.handleFormSubmit} style={{ padding: 5, width: 1130 }}>
                 <h5 style={{paddingTop: 10, paddingBottom: 5}}>Tambah Data Mahasiswa</h5>
                 <hr></hr>
                 <div className="form-group" style={{paddingTop: 10}}>
-                    <label>NIM:  </label>
-                    <input type="text" className="form-control" placeholder="Masukkan NIM"
-                    value={this.state.nim} onChange={this.onChangeNim}/>
+                    <label>NIM: </label>
+                    <input type="text" name="nim" className="form-control" placeholder="Masukkan NIM" 
+                    onChange={this.handleChange} value={this.state.nim}/>
                 </div>
                 <div className="form-group">
                     <label>Nama: </label>
-                    <input type="text" className="form-control" placeholder="Masukkan Nama"
-                    value={this.state.nama} onChange={this.onChangeNama}/>
+                    <input type="text" name="nama" className="form-control" placeholder="Masukkan Nama" 
+                    onChange={this.handleChange} value={this.state.nama}/>
                 </div>
                 <div className="form-group">
                     <label>Email: </label>
-                    <input type="email" className="form-control" placeholder="Masukkan email"
-                    value={this.state.email} onChange={this.onChangeEmail}/>
+                    <input type="email" name="email" className="form-control" placeholder="Masukkan email" 
+                    onChange={this.handleChange} value={this.state.email}/>
                 </div>
                 <div className="form-group">
                     <label>Program Studi</label>
-                    <select className="form-control" value={this.state.prodi} onChange={this.onChangeProdi}>
+                    <select className="form-control" onChange={this.handleChange} name="prodi" value={this.state.prodi}>
                         <option value> ---Pilih Prodi---</option> 
                         <option value="Mekatronika">Mekatronika</option>
                         <option value="Manajemen Informatika">Manajemen Informatika</option>
@@ -95,10 +85,10 @@ export default class Create extends Component {
                 <div className="form-group">
                     <label>Alamat:</label>
                     <textarea type="text" name="alamat" rows="3" className="form-control" placeholder="Masukkan alamat"
-                    value={this.state.alamat} onChange={this.onChangeAlamat}/>
+                    onChange={this.handleChange} value={this.state.alamat}/>
                 </div><br></br>
                 <div className="form-group">
-                    <input type="submit" value="Simpan" className="btn btn-primary"/> &nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Simpan" className="btn btn-primary" onClick={this.handleFormSubmit}/> &nbsp;&nbsp;&nbsp;
                     <input type="reset" value="Batal" className="btn btn-danger" style={{width: 80}}/>
                 </div>
             </form>
